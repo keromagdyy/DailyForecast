@@ -24,8 +24,6 @@ open class BaseActivity : AppCompatActivity() {
         supportRequestWindowFeature(Window.FEATURE_ACTION_BAR)
         super.onCreate(savedInstanceState, persistentState)
         dp = resources.displayMetrics.density
-
-        enableEdgeToEdge()
     }
 
 

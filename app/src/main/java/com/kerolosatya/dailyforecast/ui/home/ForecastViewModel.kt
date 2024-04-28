@@ -8,11 +8,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kerolosatya.dailyforecast.data.model.weather.ResponseForecastModel
 import com.kerolosatya.dailyforecast.domain.useCase.ForecastUseCase
-import com.kerolosatya.dailyforecast.ui.base.BaseApiStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+enum class ForecastApiStatus { LOADING, ERROR, DONE }
 
 @HiltViewModel
 class ForecastViewModel @Inject constructor(
@@ -20,8 +21,8 @@ class ForecastViewModel @Inject constructor(
     private val forecastUseCase: ForecastUseCase,
 ) : ViewModel() {
 
-    private val _statusForecast = MutableLiveData<BaseApiStatus>()
-    val statusForecast: LiveData<BaseApiStatus>
+    private val _statusForecast = MutableLiveData<ForecastApiStatus>()
+    val statusForecast: LiveData<ForecastApiStatus>
         get() = _statusForecast
 
     private var _forecast = MutableLiveData<ResponseForecastModel>()
@@ -29,17 +30,17 @@ class ForecastViewModel @Inject constructor(
         get() = _forecast
 
 
-    private fun getForecast(lat: String, lon: String) {
+    fun getForecast(lat: String, lon: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            _statusForecast.postValue(BaseApiStatus.LOADING)
+            _statusForecast.postValue(ForecastApiStatus.LOADING)
             try {
-                _statusForecast.postValue(BaseApiStatus.DONE)
-
-                _forecast.postValue(forecastUseCase.execute(lat, lon))
+                val forecastData = forecastUseCase.execute(lat, lon)
+                _statusForecast.postValue(ForecastApiStatus.DONE)
+                _forecast.postValue(forecastData)
                 Log.d("getForecastException", "getForecast: ${forecast}")
 
             } catch (e: Exception) {
-                _statusForecast.postValue(BaseApiStatus.ERROR)
+                _statusForecast.postValue(ForecastApiStatus.ERROR)
                 Log.d("getForecastException", "getForecast: ${e.message}")
             }
 

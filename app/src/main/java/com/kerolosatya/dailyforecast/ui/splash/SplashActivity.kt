@@ -2,6 +2,7 @@ package com.kerolosatya.dailyforecast.ui.splash
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.lifecycleScope
 import com.kerolosatya.dailyforecast.ui.home.HomeActivity
 import com.kerolosatya.dailyforecast.databinding.ActivitySplashBinding
@@ -21,7 +22,8 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun init() {
-        binding.animationView.setAnimation("lottie_splash_logo.json")
+        enableEdgeToEdge()
+        binding.animationView.setAnimation("lottie_weather.json")
         lifecycleScope.launch {
             delay(3000)
 

@@ -36,7 +36,7 @@ class NetModule {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(ConstantLinks.BASE_URL_WEATHER)
-            .client(getOkHttpClient(true))
+            .client(getOkHttpClient())
             .build()
     }
 
@@ -53,7 +53,7 @@ class NetModule {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(ConstantLinks.BASE_URL_CITIES)
-            .client(getOkHttpClient(false))
+            .client(getOkHttpClient())
             .build()
     }
 
@@ -63,17 +63,12 @@ class NetModule {
         return retrofit.create(ICitiesApis::class.java)
     }
 
-    private fun getOkHttpClient(isWeather: Boolean) = OkHttpClient().newBuilder()
+    private fun getOkHttpClient() = OkHttpClient().newBuilder()
         .addInterceptor { chain ->
             val newUrl = chain.request().url
-            if (isWeather) {
-                newUrl.newBuilder()
-                    .addQueryParameter("appid", ConstantLinks.API_KEY)
-                    .build()
-            } else {
-                newUrl.newBuilder()
-                    .build()
-            }
+                .newBuilder()
+                .addQueryParameter("appid", ConstantLinks.API_KEY)
+                .build()
 
             val newRequest = chain.request()
                 .newBuilder()
