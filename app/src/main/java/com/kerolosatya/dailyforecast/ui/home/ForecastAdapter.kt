@@ -28,7 +28,8 @@ class ForecastAdapter :
 
             binding.imgTemp.load("${ConstantLinks.IMAGE_URL}${item.weather[0].icon}@2x.png")
 
-            binding.txtMainTemp.text = "Temperature : ${kelvinToCelsius(item.main.temp)}°C"
+            binding.txtTemp.text = "Temperature : ${kelvinToCelsius(item.main.temp)}°C"
+            binding.txtMain.text = item.weather[0].main
             binding.txtMinTemp.text = "Min Temperature : ${kelvinToCelsius(item.main.tempMin)}°C"
             binding.txtMaxTemp.text = "Max Temperature : ${kelvinToCelsius(item.main.tempMax)}°C"
             binding.txtHumidity.text = "Humidity : ${item.main.humidity}%"

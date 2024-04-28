@@ -15,12 +15,12 @@ import dagger.hilt.components.SingletonComponent
 class ViewModelModule {
 
     @Provides
-    fun provideCompetitionDetailsViewModel(app: Application, forecastUseCase: ForecastUseCase): ForecastViewModel {
-        return ForecastViewModel(app,forecastUseCase)
+    fun provideCompetitionDetailsViewModel(forecastUseCase: ForecastUseCase): ForecastViewModel {
+        return ForecastViewModel(forecastUseCase)
     }
 
     @Provides
-    fun provideCitiesViewModel(app: Application, citiesUseCase: CitiesUseCase): CitiesViewModel {
-        return CitiesViewModel(app,citiesUseCase)
+    fun provideCitiesViewModel(citiesUseCase: CitiesUseCase): CitiesViewModel {
+        return CitiesViewModel(citiesUseCase)
     }
 }

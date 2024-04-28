@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.lifecycleScope
+import com.kerolosatya.dailyforecast.data.db.pref.SharedPreferenceHelper
 import com.kerolosatya.dailyforecast.ui.home.HomeActivity
 import com.kerolosatya.dailyforecast.databinding.ActivitySplashBinding
 import com.kerolosatya.dailyforecast.ui.base.BaseActivity
@@ -23,6 +24,9 @@ class SplashActivity : BaseActivity() {
 
     private fun init() {
         enableEdgeToEdge()
+
+        SharedPreferenceHelper.init(this@SplashActivity)
+
         binding.animationView.setAnimation("lottie_weather.json")
         lifecycleScope.launch {
             delay(3000)
